@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Call Java Method from JavaScript</title>
+   
+</head>
+<body>
+    <button onclick="get()">GET</button>
+    <button onclick="post()">POST</button>
+    <h1></h1>
+    <script>
+        var url = 'http://localhost:8080/hello-servlet';
+        var url1 = 'https://jsonplaceholder.typicode.com/posts';
+        function get(){
+            fetch(url)
+            .then(response => { 
+                return response.json();
+            })
+            .then(result => {
+                let s = '';
+                for(var x of result){
+                    s+=(`id: ${x.id}, name: ${x.name}\n`)
+                }
+                document.querySelector('h1').innerText = s; 
+            })
+            .catch(error => {
+                console.log('lỗi!')
+            })
+        }
+        
+        function post(){
+            let idd = prompt('id: ');
+            let namee = prompt('name: ');
+            const data = {
+                id: idd,
+                name: namee
+            }
+            fetch(url,{
+                method: 'POST',
+                headers: {
+                'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then (response => response.json())
+            .then(result => {
+                console.log(result);
+            })
+            .catch(error => {
+                console.log(error);
+            })
+            
+        }
+        document.write('phương')
+    </script>
+</body>
+</html>
